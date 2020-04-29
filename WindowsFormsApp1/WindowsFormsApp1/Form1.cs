@@ -24,7 +24,7 @@ namespace WindowsFormsApp1
         {
 
         }
-     
+
         private void button1_Click(object sender, EventArgs e)
         {
             //thuc hien lenh
@@ -32,16 +32,15 @@ namespace WindowsFormsApp1
             if (dangNhap.Ktra(txtTK.Text.Trim(), txtPass.Text.Trim(), ref err) == true)
             {
                 Form2 form2 = new Form2();
-                form2.ShowDialog();
                 username = txtTK.Text.Trim();
+                form2.ShowDialog();
             }
             else
-            { MessageBox.Show("Sai thong tin");
+            {
+                MessageBox.Show("Sai thong tin");
                 txtTK.Clear();
                 txtPass.Clear();
             }
-
-            
         }
 
     }

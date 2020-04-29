@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QuanLyNguoiDungModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="LoaiNguoiDung">
+    <Key>
+      <PropertyRef Name="IdLoaiNguoiDung" />
+    </Key>
+    <Property Name="IdLoaiNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="NguoiDungs" Relationship="Self.fk_NguoiDung_LoaiNguoiDung" FromRole="LoaiNguoiDung" ToRole="NguoiDung" />
+    <NavigationProperty Name="Quyens" Relationship="QuanLyNguoiDungModel.PhanLoaiQuyen" FromRole="LoaiNguoiDung" ToRole="Quyen" />
+  </EntityType>
+  <EntityType Name="NguoiDung">
+    <Key>
+      <PropertyRef Name="IdNguoiDung" />
+    </Key>
+    <Property Name="IdNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdLoaiNguoiDung" Type="Int32" />
+    <NavigationProperty Name="LoaiNguoiDung" Relationship="Self.fk_NguoiDung_LoaiNguoiDung" FromRole="NguoiDung" ToRole="LoaiNguoiDung" />
+    <NavigationProperty Name="TaiKhoans" Relationship="Self.fk_TaiKhoan_NguoiDung" FromRole="NguoiDung" ToRole="TaiKhoan" />
+  </EntityType>
+  <EntityType Name="Quyen">
+    <Key>
+      <PropertyRef Name="IdQuyen" />
+    </Key>
+    <Property Name="IdQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TenLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MoTa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LoaiNguoiDungs" Relationship="QuanLyNguoiDungModel.PhanLoaiQuyen" FromRole="Quyen" ToRole="LoaiNguoiDung" />
+  </EntityType>
+  <EntityType Name="TaiKhoan">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdNguoiDung" Type="Int32" />
+    <NavigationProperty Name="NguoiDung" Relationship="Self.fk_TaiKhoan_NguoiDung" FromRole="TaiKhoan" ToRole="NguoiDung" />
+  </EntityType>
+  <Association Name="fk_NguoiDung_LoaiNguoiDung">
+    <End Role="LoaiNguoiDung" Type="Self.LoaiNguoiDung" Multiplicity="0..1" />
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoaiNguoiDung">
+        <PropertyRef Name="IdLoaiNguoiDung" />
+      </Principal>
+      <Dependent Role="NguoiDung">
+        <PropertyRef Name="IdLoaiNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_TaiKhoan_NguoiDung">
+    <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
+    <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="NguoiDung">
+        <PropertyRef Name="IdNguoiDung" />
+      </Principal>
+      <Dependent Role="TaiKhoan">
+        <PropertyRef Name="IdNguoiDung" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="QuanLyNguoiDungEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="LoaiNguoiDungs" EntityType="Self.LoaiNguoiDung" />
+    <EntitySet Name="NguoiDungs" EntityType="Self.NguoiDung" />
+    <EntitySet Name="Quyens" EntityType="Self.Quyen" />
+    <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
+    <AssociationSet Name="fk_NguoiDung_LoaiNguoiDung" Association="Self.fk_NguoiDung_LoaiNguoiDung">
+      <End Role="LoaiNguoiDung" EntitySet="LoaiNguoiDungs" />
+      <End Role="NguoiDung" EntitySet="NguoiDungs" />
+    </AssociationSet>
+    <AssociationSet Name="fk_TaiKhoan_NguoiDung" Association="Self.fk_TaiKhoan_NguoiDung">
+      <End Role="NguoiDung" EntitySet="NguoiDungs" />
+      <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QuanLyNguoiDungModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QuanLyNguoiDungModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <AssociationSet Name="PhanLoaiQuyen" Association="QuanLyNguoiDungModel.PhanLoaiQuyen">
+      <End Role="LoaiNguoiDung" EntitySet="LoaiNguoiDungs" />
+      <End Role="Quyen" EntitySet="Quyens" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <Association Name="PhanLoaiQuyen">
+    <End Type="QuanLyNguoiDungModel.LoaiNguoiDung" Role="LoaiNguoiDung" Multiplicity="*" />
+    <End Type="QuanLyNguoiDungModel.Quyen" Role="Quyen" Multiplicity="*" />
+  </Association>
+</Schema>

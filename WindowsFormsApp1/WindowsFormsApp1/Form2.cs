@@ -11,7 +11,8 @@ using System.Windows.Forms;
 namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
-    { string err;
+    {
+        string err;
         BSLayer.BLDangNhap BLDangNhap = new BSLayer.BLDangNhap();
         public Form2()
         {
@@ -27,22 +28,36 @@ namespace WindowsFormsApp1
         {
             Form3 form3 = new Form3();
             form3.ShowDialog();
-            
-        
+
+
         }
 
-        //loaddata
-       
-        
-        
-        public void Load()
-        {
-            BSLayer.BLDangNhap bLDangNhap = new BSLayer.BLDangNhap();
-            bLDangNhap.IdNguoiDung()
-        }
+        //loaddata    
         private void Form2_Load(object sender, EventArgs e)
         {
+            QuanLyNguoiDungEntities enity = new QuanLyNguoiDungEntities();
 
+            string tenLoaiNguoiDung = (from taikhoan in enity.TaiKhoans
+                                       join nguoidung in enity.NguoiDungs
+                                       on taikhoan.IdNguoiDung equals nguoidung.IdNguoiDung
+                                       join loainguoidung in enity.LoaiNguoiDungs
+                                       on nguoidung.IdLoaiNguoiDung equals loainguoidung.IdLoaiNguoiDung
+                                       where taikhoan.Username == Form1.username
+                                       select loainguoidung.TenLoai).FirstOrDefault();
+           
+            var loaiNguoiDung = (from taikhoan in enity.TaiKhoans
+                                  join nguoidung in enity.NguoiDungs
+                                  on taikhoan.IdNguoiDung equals nguoidung.IdNguoiDung
+                                  join loainguoidung in enity.LoaiNguoiDungs
+                                  on nguoidung.IdLoaiNguoiDung equals loainguoidung.IdLoaiNguoiDung
+                                  where taikhoan.Username == Form1.username
+                                  select loainguoidung).FirstOrDefault();
+
+            List<Quyen> quyens = loaiNguoiDung.Quyens.ToList();
+
+            textBox1.Text = tenLoaiNguoiDung;
+
+            MessageBox.Show(quyens.ToString());
         }
     }
 }

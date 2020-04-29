@@ -14,8 +14,17 @@ namespace WindowsFormsApp1
     
     public partial class Quyen
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Quyen()
+        {
+            this.LoaiNguoiDungs = new HashSet<LoaiNguoiDung>();
+        }
+    
         public int IdQuyen { get; set; }
         public string TenLoai { get; set; }
         public string MoTa { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LoaiNguoiDung> LoaiNguoiDungs { get; set; }
     }
 }
