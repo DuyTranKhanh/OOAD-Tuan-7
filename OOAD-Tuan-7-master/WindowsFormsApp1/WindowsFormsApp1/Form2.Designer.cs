@@ -35,6 +35,7 @@
             this.btn4 = new System.Windows.Forms.Button();
             this.btn2 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
+            this.btn5 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -100,11 +101,21 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // btn5
+            // 
+            this.btn5.Location = new System.Drawing.Point(531, 89);
+            this.btn5.Name = "btn5";
+            this.btn5.Size = new System.Drawing.Size(75, 23);
+            this.btn5.TabIndex = 7;
+            this.btn5.Text = "Quyền 5";
+            this.btn5.UseVisualStyleBackColor = true;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(569, 182);
+            this.ClientSize = new System.Drawing.Size(632, 182);
+            this.Controls.Add(this.btn5);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.btn2);
             this.Controls.Add(this.btn4);
@@ -129,5 +140,6 @@
         private System.Windows.Forms.Button btn4;
         private System.Windows.Forms.Button btn2;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btn5;
     }
 }
