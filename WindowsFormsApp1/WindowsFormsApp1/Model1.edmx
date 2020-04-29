@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuanLyNguoiDungModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="LoaiNguoiDung">
+          <Key>
+            <PropertyRef Name="IdLoaiNguoiDung" />
+          </Key>
+          <Property Name="IdLoaiNguoiDung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenLoai" Type="nvarchar" MaxLength="50" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NguoiDung">
+          <Key>
+            <PropertyRef Name="IdNguoiDung" />
+          </Key>
+          <Property Name="IdNguoiDung" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hoten" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdLoaiNguoiDung" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'QuanLyNguoiDung.dbo.PhanLoaiQuyen' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="PhanLoaiQuyen">
+          <Property Name="IdQuyen" Type="int" />
+          <Property Name="IdLoaiNguoiDung" Type="int" />
+        </EntityType>-->
+        <EntityType Name="Quyen">
+          <Key>
+            <PropertyRef Name="IdQuyen" />
+          </Key>
+          <Property Name="IdQuyen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenLoai" Type="nvarchar" MaxLength="50" />
+          <Property Name="MoTa" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="IdNguoiDung" Type="int" />
+        </EntityType>
+        <Association Name="fk_NguoiDung_LoaiNguoiDung">
+          <End Role="LoaiNguoiDung" Type="Self.LoaiNguoiDung" Multiplicity="0..1" />
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiNguoiDung">
+              <PropertyRef Name="IdLoaiNguoiDung" />
+            </Principal>
+            <Dependent Role="NguoiDung">
+              <PropertyRef Name="IdLoaiNguoiDung" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+error 6004: The table 'QuanLyNguoiDung.dbo.PhanLoaiQuyen' is referenced by a relationship, but cannot be found.
+        <Association Name="fk_PhanLoaiQuyen_LoaiNguoiDung" />-->
+        <!--Errors Found During Generation:
+error 6004: The table 'QuanLyNguoiDung.dbo.PhanLoaiQuyen' is referenced by a relationship, but cannot be found.
+        <Association Name="fk_PhanLoaiQuyen_Quyen" />-->
+        <Association Name="fk_TaiKhoan_NguoiDung">
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="IdNguoiDung" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="IdNguoiDung" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyNguoiDungModelStoreContainer">
+          <EntitySet Name="LoaiNguoiDung" EntityType="Self.LoaiNguoiDung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NguoiDung" EntityType="Self.NguoiDung" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Quyen" EntityType="Self.Quyen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TaiKhoan" EntityType="Self.TaiKhoan" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_NguoiDung_LoaiNguoiDung" Association="Self.fk_NguoiDung_LoaiNguoiDung">
+            <End Role="LoaiNguoiDung" EntitySet="LoaiNguoiDung" />
+            <End Role="NguoiDung" EntitySet="NguoiDung" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TaiKhoan_NguoiDung" Association="Self.fk_TaiKhoan_NguoiDung">
+            <End Role="NguoiDung" EntitySet="NguoiDung" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoan" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLyNguoiDungModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="LoaiNguoiDung">
+          <Key>
+            <PropertyRef Name="IdLoaiNguoiDung" />
+          </Key>
+          <Property Name="IdLoaiNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NguoiDungs" Relationship="Self.fk_NguoiDung_LoaiNguoiDung" FromRole="LoaiNguoiDung" ToRole="NguoiDung" />
+        </EntityType>
+        <EntityType Name="NguoiDung">
+          <Key>
+            <PropertyRef Name="IdNguoiDung" />
+          </Key>
+          <Property Name="IdNguoiDung" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hoten" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdLoaiNguoiDung" Type="Int32" />
+          <NavigationProperty Name="LoaiNguoiDung" Relationship="Self.fk_NguoiDung_LoaiNguoiDung" FromRole="NguoiDung" ToRole="LoaiNguoiDung" />
+          <NavigationProperty Name="TaiKhoans" Relationship="Self.fk_TaiKhoan_NguoiDung" FromRole="NguoiDung" ToRole="TaiKhoan" />
+        </EntityType>
+        <EntityType Name="Quyen">
+          <Key>
+            <PropertyRef Name="IdQuyen" />
+          </Key>
+          <Property Name="IdQuyen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MoTa" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="TaiKhoan">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IdNguoiDung" Type="Int32" />
+          <NavigationProperty Name="NguoiDung" Relationship="Self.fk_TaiKhoan_NguoiDung" FromRole="TaiKhoan" ToRole="NguoiDung" />
+        </EntityType>
+        <Association Name="fk_NguoiDung_LoaiNguoiDung">
+          <End Role="LoaiNguoiDung" Type="Self.LoaiNguoiDung" Multiplicity="0..1" />
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiNguoiDung">
+              <PropertyRef Name="IdLoaiNguoiDung" />
+            </Principal>
+            <Dependent Role="NguoiDung">
+              <PropertyRef Name="IdLoaiNguoiDung" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_TaiKhoan_NguoiDung">
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
+          <End Role="TaiKhoan" Type="Self.TaiKhoan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="IdNguoiDung" />
+            </Principal>
+            <Dependent Role="TaiKhoan">
+              <PropertyRef Name="IdNguoiDung" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyNguoiDungEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="LoaiNguoiDungs" EntityType="Self.LoaiNguoiDung" />
+          <EntitySet Name="NguoiDungs" EntityType="Self.NguoiDung" />
+          <EntitySet Name="Quyens" EntityType="Self.Quyen" />
+          <EntitySet Name="TaiKhoans" EntityType="Self.TaiKhoan" />
+          <AssociationSet Name="fk_NguoiDung_LoaiNguoiDung" Association="Self.fk_NguoiDung_LoaiNguoiDung">
+            <End Role="LoaiNguoiDung" EntitySet="LoaiNguoiDungs" />
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+          </AssociationSet>
+          <AssociationSet Name="fk_TaiKhoan_NguoiDung" Association="Self.fk_TaiKhoan_NguoiDung">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="TaiKhoan" EntitySet="TaiKhoans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLyNguoiDungModelStoreContainer" CdmEntityContainer="QuanLyNguoiDungEntities">
+          <EntitySetMapping Name="LoaiNguoiDungs">
+            <EntityTypeMapping TypeName="QuanLyNguoiDungModel.LoaiNguoiDung">
+              <MappingFragment StoreEntitySet="LoaiNguoiDung">
+                <ScalarProperty Name="IdLoaiNguoiDung" ColumnName="IdLoaiNguoiDung" />
+                <ScalarProperty Name="TenLoai" ColumnName="TenLoai" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NguoiDungs">
+            <EntityTypeMapping TypeName="QuanLyNguoiDungModel.NguoiDung">
+              <MappingFragment StoreEntitySet="NguoiDung">
+                <ScalarProperty Name="IdNguoiDung" ColumnName="IdNguoiDung" />
+                <ScalarProperty Name="Hoten" ColumnName="Hoten" />
+                <ScalarProperty Name="IdLoaiNguoiDung" ColumnName="IdLoaiNguoiDung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Quyens">
+            <EntityTypeMapping TypeName="QuanLyNguoiDungModel.Quyen">
+              <MappingFragment StoreEntitySet="Quyen">
+                <ScalarProperty Name="IdQuyen" ColumnName="IdQuyen" />
+                <ScalarProperty Name="TenLoai" ColumnName="TenLoai" />
+                <ScalarProperty Name="MoTa" ColumnName="MoTa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TaiKhoans">
+            <EntityTypeMapping TypeName="QuanLyNguoiDungModel.TaiKhoan">
+              <MappingFragment StoreEntitySet="TaiKhoan">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IdNguoiDung" ColumnName="IdNguoiDung" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
