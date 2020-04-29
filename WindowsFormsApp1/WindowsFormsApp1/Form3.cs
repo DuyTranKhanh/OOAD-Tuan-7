@@ -38,5 +38,10 @@ namespace WindowsFormsApp1
                 textBox2.Clear();
             }
         }
+
+        private void Form3_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

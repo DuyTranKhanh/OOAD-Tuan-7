@@ -12,7 +12,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
     {
-        string err;
+       // string err;
         BSLayer.BLDangNhap BLDangNhap = new BSLayer.BLDangNhap();
         public Form2()
         {
@@ -51,11 +51,28 @@ namespace WindowsFormsApp1
                                   where taikhoan.Username == Form1.username
                                   select loainguoidung).FirstOrDefault();
 
-            List<Quyen> quyens = loaiNguoiDung.Quyens.ToList();
+           // List<Quyen> quyens = loaiNguoiDung.Quyens.ToList();
 
             textBox1.Text = tenLoaiNguoiDung;
+            if (tenLoaiNguoiDung.Trim() == "G1")
+            {
+                btn1.Enabled = true;
+                btn2.Enabled = true;
+                btn3.Enabled = true;
+                btn4.Enabled = true;
+                btn5.Enabled = true;
 
-            MessageBox.Show(quyens.ToString());
+            }
+            else if (tenLoaiNguoiDung.Trim() == "G2")
+            {
+                btn1.Enabled = true;
+                btn2.Enabled = true;
+                btn3.Enabled = true;
+                btn4.Enabled = false;
+                btn5.Enabled = false;
+            }
+
+            //MessageBox.Show(quyens.ToString());
         }
     }
 }
