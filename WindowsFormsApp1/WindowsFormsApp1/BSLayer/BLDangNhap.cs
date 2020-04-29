@@ -8,7 +8,7 @@ namespace WindowsFormsApp1.BSLayer
 {
     class BLDangNhap
     {
-        public bool Ktra(string username,string password,ref string err)
+        public bool Ktra(string username, string password, ref string err)
         {
             QuanLyNguoiDungEntities quanLyNguoiDungEntities = new QuanLyNguoiDungEntities();
             var u = (from tp in quanLyNguoiDungEntities.TaiKhoans
@@ -17,10 +17,10 @@ namespace WindowsFormsApp1.BSLayer
             if (u != null)
                 return true;
             else return false;
-            
+
         }
         //lay id nguoi dung
-        public int IdNguoiDung(string username,ref string err)
+        public int IdNguoiDung(string username, ref string err)
         {
             QuanLyNguoiDungEntities quanLyNguoiDungEntities = new QuanLyNguoiDungEntities();
             var u = (from tp in quanLyNguoiDungEntities.TaiKhoans
@@ -31,7 +31,7 @@ namespace WindowsFormsApp1.BSLayer
             else return -1;
         }
         //co id nguoi dung 
-        public int GetidLoaiNguoiDung(int idnguoidung,ref string err)
+        public int GetidLoaiNguoiDung(int idnguoidung, ref string err)
         {
             QuanLyNguoiDungEntities quanLyNguoiDungEntities = new QuanLyNguoiDungEntities();
             var u = (from a in quanLyNguoiDungEntities.NguoiDungs
