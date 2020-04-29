@@ -16,5 +16,27 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            QuanLyNguoiDungEntities enity = new QuanLyNguoiDungEntities();
+
+            var user = enity.TaiKhoans.Where(u => u.Username == Form1.username && u.Password == textBox1.Text).FirstOrDefault();
+
+            if (user != null)
+            {
+                user.Password = textBox2.Text;
+                enity.SaveChanges();
+
+                MessageBox.Show("Mật Khẩu thay đổi thành công");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Mật Khẩu hiện tại không đúng");
+                textBox1.Clear();
+                textBox2.Clear();
+            }
+        }
     }
 }
